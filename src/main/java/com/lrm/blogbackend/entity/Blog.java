@@ -1,9 +1,6 @@
 package com.lrm.blogbackend.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.Date;
 
 @Entity
@@ -34,7 +31,11 @@ public class Blog {
     //是否推薦
     private boolean recommened;
     //時間戳
+    //對應到資料庫裏面生成的時間，可以選擇類型
+    @Temporal(TemporalType.TIMESTAMP)
     private Date createTime;
+    //對應到資料庫裏面生成的時間，可以選擇類型
+    @Temporal(TemporalType.TIMESTAMP)
     private Date updateTime;
 
     public Blog() {
