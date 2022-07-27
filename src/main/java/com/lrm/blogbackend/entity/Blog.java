@@ -38,6 +38,8 @@ public class Blog {
     @Temporal(TemporalType.TIMESTAMP)
     private Date updateTime;
 
+    @ManyToOne
+    private Type type;
     public Blog() {
     }
 
