@@ -1,7 +1,9 @@
 package com.lrm.blogbackend.entity;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "t_blog")
@@ -40,6 +42,15 @@ public class Blog {
 
     @ManyToOne
     private Type type;
+    //級聯在編寫觸發器時經常用到，觸發器的作用是當 主控表資訊改變時，用來保證其關聯表中資料同步更新。若對觸發器來修改或刪除關聯表相記錄，必須要刪除對應的關聯表資訊，否則，會存有髒資料。所以，適當的做法是，刪除主表的同時，關聯表的資訊也要同時刪除，在hibernate中，只需設定cascade屬性值即可。
+    @ManyToMany(cascade = {CascadeType.PERSIST})
+    private List<Tag> tags = new ArrayList();
+    @ManyToOne
+    private User user;
+    @OneToMany(mappedBy = "blog")
+    private List<Comment> comment = new ArrayList<>();
+
+
     public Blog() {
     }
 
@@ -145,6 +156,38 @@ public class Blog {
 
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
+    }
+
+    public Type getType() {
+        return type;
+    }
+
+    public void setType(Type type) {
+        this.type = type;
+    }
+
+    public List<Tag> getTags() {
+        return tags;
+    }
+
+    public void setTags(List<Tag> tags) {
+        this.tags = tags;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public List<Comment> getComment() {
+        return comment;
+    }
+
+    public void setComment(List<Comment> comment) {
+        this.comment = comment;
     }
 
     @Override
