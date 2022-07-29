@@ -4,7 +4,7 @@
 <head th:replace="admin/_fragments :: head(~{::title})">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Blog管理</title>
+    <title>分類管理</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css">
     <link rel="stylesheet" href="../../static/css/me.css">
@@ -12,7 +12,7 @@
 
 <body>
 <!--導航-->
-<nav class="ui inverted attached segment m-padded-tb-mini m-shadow-small" th:replace="admin/_fragments :: menu(1)">
+<nav th:replace="admin/_fragments :: menu(2)" class="ui inverted attached segment m-padded-tb-mini m-shadow-small">
     <div class="ui container">
         <div class="ui inverted secondary stackable menu">
             <h5 class="ui teal header item">管理後臺</h5>
@@ -49,67 +49,32 @@
 <!--中間內容-->
 <div class="m-container-small m-padded-tb-big">
     <div class="ui container">
-        <form action="#" method="post" class="ui segment form">
-            <div class="inline fields">
-                <div class="field">
-                    <label>
-                        <input type="text" name="title" placeholder="標題">
-                    </label>
-                </div>
-                <div class="field">
-                    <div class="ui selection dropdown">
-                        <input type="hidden" name="type">
-                        <i class="dropdown icon"></i>
-                        <div class="default text">分類</div>
-                        <div class="menu">
-                            <div class="item" data-value="1">錯誤日誌</div>
-                            <div class="item" data-value="1">開發者手冊</div>
-                        </div>
-                    </div>
-                </div>
-                <div class="field">
-                    <div class="ui checkbox">
-                        <input type="checkbox" id="recommend" name="recommend">
-                        <label for="recommend">推薦</label>
-                    </div>
-                </div>
-                <div class="field">
-                    <button class="ui mini teal basic button"><i class="search icon"></i>搜尋</button>
-                </div>
-            </div>
-        </form>
         <table class="ui cell table">
             <thead>
             <tr>
                 <th></th>
-                <th>標題</th>
-                <th>類型</th>
-                <th>推薦</th>
-                <th>更新時間</th>
+                <th>名稱</th>
                 <th>操作</th>
             </tr>
             </thead>
             <tbody>
-            <tr>
-                <td>1</td>
-                <td>需要練習的清單</td>
-                <td>認知升級</td>
-                <td>是</td>
-                <td>2022-07-22 10:45</td>
-                <td>
-                    <a href="" class="ui mini teal basic button">編輯</a>
-                    <a href="" class="ui mini red basic button">刪除</a>
-                </td>
-            </tr>
+                <tr th:ecah="type, iterStat : ${page.content}">
+                    <td th:text="${iterStat.count}">1</td>
+                    <td th:text="${type.name}">需要練習的清單</td>
+                    <td>
+                        <a href="#" th:href="@{/admin/type/{id}/input(${type.id})}" class="ui mini teal basic button">編輯</a>
+                        <a href="#" th:href="@{/admin/type/{id}/delete(${type.id})}" class="ui mini red basic button">刪除</a>
+                    </td>
+                </tr>
             </tbody>
             <tfoot>
             <tr>
                 <th colspan="6">
                     <div class="ui mini floated pagination menu">
-                        <a class="item">上一頁</a>
-                        <a class="item">下一頁</a>
+                        <a th:href="@{/admin/type(page=${page.number}-1}" class="item">上一頁</a>
+                        <a th:href="@{/admin/type(page=${page.number}+1}" class="item">下一頁</a>
                     </div>
-                    <a href="#" class="ui mini right floated teal basic button">新增</a>
+                    <a href="#" th:href="@{/admin/types/input}" class="ui mini right floated teal basic button">新增</a>
                 </th>
             </tr>
             </tfoot>
@@ -119,7 +84,7 @@
 <br>
 <br>
 <!--底部-->
-<footer class="ui inverted vertical segment m-padded-tb-massive" th:replace="admin/_fragments :: footer" >
+<footer th:replace="admin/_fragments :: footer" class="ui inverted vertical segment m-padded-tb-massive">
     <div class="ui center aligned container">
         <div class="ui inverted divided stackable grid">
             <div class="three wide column">
