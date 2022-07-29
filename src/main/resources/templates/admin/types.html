@@ -16,7 +16,7 @@
     <div class="ui container">
         <div class="ui inverted secondary stackable menu">
             <h5 class="ui teal header item">管理後臺</h5>
-            <a href="#" class="active m-item item m-mobile-hide"><i class="home icon"></i>Blog</a>
+            <a href="#" class="m-item item m-mobile-hide"><i class="home icon"></i>Blog</a>
             <a href="#" class="m-item item m-mobile-hide"><i class="idea icon"></i>分類</a>
             <a href="#" class="m-item item m-mobile-hide"><i class="tags icon"></i>標籤</a>
             <div class="right m-item m-mobile-hide menu">
@@ -49,6 +49,11 @@
 <!--中間內容-->
 <div class="m-container-small m-padded-tb-big">
     <div class="ui container">
+        <div class="ui success message" th:unless="${#strings.isEmpty(message)}">
+            <i class="close icon"></i>
+            <div class="header">提示:</div>
+            <p th:text="${message}"></p>
+        </div>
         <table class="ui cell table">
             <thead>
             <tr>
@@ -58,21 +63,21 @@
             </tr>
             </thead>
             <tbody>
-                <tr th:ecah="type, iterStat : ${page.content}">
+                <tr th:each="type,iterStat : ${page.content}">
                     <td th:text="${iterStat.count}">1</td>
                     <td th:text="${type.name}">需要練習的清單</td>
                     <td>
-                        <a href="#" th:href="@{/admin/type/{id}/input(${type.id})}" class="ui mini teal basic button">編輯</a>
-                        <a href="#" th:href="@{/admin/type/{id}/delete(${type.id})}" class="ui mini red basic button">刪除</a>
+                        <a class="ui mini teal basic button" href="#" th:href="@{/admin/types/{id}/input(id=${type.id})}">編輯</a>
+                        <a class="ui mini red basic button" href="#" th:href="@{/admin/types/{id}/delete(id=${type.id})}">刪除</a>
                     </td>
                 </tr>
             </tbody>
             <tfoot>
             <tr>
                 <th colspan="6">
-                    <div class="ui mini floated pagination menu">
-                        <a th:href="@{/admin/type(page=${page.number}-1}" class="item">上一頁</a>
-                        <a th:href="@{/admin/type(page=${page.number}+1}" class="item">下一頁</a>
+                    <div class="ui mini floated pagination menu" th:if="${page.totalPages}>1">
+                        <a th:href="@{/admin/types(page=${page.number}-1)}" class="item" th:unless="${page.first}">上一頁</a>
+                        <a th:href="@{/admin/types(page=${page.number}+1)}" class="item" th:unless="${page.last}">下一頁</a>
                     </div>
                     <a href="#" th:href="@{/admin/types/input}" class="ui mini right floated teal basic button">新增</a>
                 </th>
@@ -133,6 +138,11 @@
 
     $('.ui.dropdown').dropdown({
         on: 'hover'
+    });
+
+    //消息提示關閉初始化
+    $('.message .close').on('click',function () {
+        $(this).closest('.message').transition('fade');
     });
 
 </script>
