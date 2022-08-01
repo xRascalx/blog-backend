@@ -4,7 +4,6 @@ import com.lrm.blogbackend.NotFoundException;
 import com.lrm.blogbackend.Repository.TypeRepository;
 import com.lrm.blogbackend.entity.Type;
 import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -30,6 +29,11 @@ public class TypeServiceImpl implements TypeService {
     @Override
     public Type getType(Long id) {
         return typeRepository.findById(id).get();
+    }
+
+    @Override
+    public Type getTypeByName(String name) {
+        return typeRepository.findByName(name);
     }
 
     @Transactional

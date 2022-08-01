@@ -12,7 +12,8 @@ public class Type {
     @Id
     @GeneratedValue
     private Long id;
-    @NotBlank(message = "請輸入分類名稱")
+
+    @NotBlank(message = "分類欄位不得無值")
     private String name;
 
     @OneToMany(mappedBy = "type")

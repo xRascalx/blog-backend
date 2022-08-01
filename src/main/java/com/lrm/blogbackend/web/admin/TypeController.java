@@ -2,7 +2,6 @@ package com.lrm.blogbackend.web.admin;
 
 import com.lrm.blogbackend.entity.Type;
 import com.lrm.blogbackend.service.TypeService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
@@ -34,19 +33,25 @@ public class TypeController {
     }
 
     @GetMapping("/types/input")
-    public String input() {
+    public String input(Model model) {
+        model.addAttribute("type", new Type());
         return "admin/types-input";
     }
 
     @PostMapping("/types")
-    public String post(@Valid Type type, BindingResult result, RedirectAttributes attributes) {
-        Type t = typeService.saveType(type);
+    public String post(@Valid Type type,BindingResult result, RedirectAttributes attributes) {
+        Type type1 = typeService.getTypeByName(type.getName());
+        if(type1 != null){
+            result.rejectValue("name","nameError","不能重複分類");
+        }
+
         if(result.hasErrors()){
             return "admin/types-input";
         }
-        if (t == null) {
+        if (type.getName().equals("")) {
             attributes.addFlashAttribute("message", "操作失敗");
         } else {
+            typeService.saveType(type);
             attributes.addFlashAttribute("message", "操作成功");
         }
         return "redirect:/admin/types";

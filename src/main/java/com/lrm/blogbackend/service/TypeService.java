@@ -7,6 +7,8 @@ import org.springframework.data.domain.Pageable;
 public interface TypeService {
     Type saveType(Type type);
     Type getType(Long id);
+
+    Type getTypeByName(String name);
     //分頁查詢
     Page<Type> listType(Pageable pageable);
     Type updateType(Long id,Type type);
