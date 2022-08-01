@@ -75,7 +75,7 @@ public class TypeController {
         if (result.hasErrors()) {
             return "admin/types-input";
         }
-        if (type.getName().equals("")) {
+        if ("".equals(type.getName())) {
             attributes.addFlashAttribute("message", "更新失敗");
         } else {
             typeService.saveType(type);
