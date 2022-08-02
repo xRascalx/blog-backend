@@ -31,7 +31,7 @@ public class Blog {
     //發布
     private boolean published;
     //是否推薦
-    private boolean recommened;
+    private boolean recommend;
     //時間戳
     //對應到資料庫裏面生成的時間，可以選擇類型
     @Temporal(TemporalType.TIMESTAMP)
@@ -134,12 +134,12 @@ public class Blog {
         this.published = published;
     }
 
-    public boolean isRecommened() {
-        return recommened;
+    public boolean isRecommend() {
+        return recommend;
     }
 
-    public void setRecommened(boolean recommened) {
-        this.recommened = recommened;
+    public void setRecommend(boolean recommend) {
+        this.recommend = recommend;
     }
 
     public Date getCreateTime() {
@@ -203,7 +203,7 @@ public class Blog {
                 ", shareStatement=" + shareStatement +
                 ", commentabled=" + commentabled +
                 ", published=" + published +
-                ", recommened=" + recommened +
+                ", recommend=" + recommend +
                 ", createTime=" + createTime +
                 ", updateTime=" + updateTime +
                 '}';

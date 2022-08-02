@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-<html lang="en">
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head th:replace="admin/_fragments :: head(~{::title})">
     <meta charset="UTF-8">
@@ -49,7 +48,8 @@
 <!--中間內容-->
 <div class="m-container-small m-padded-tb-big">
     <div class="ui container">
-        <form action="#" method="post" class="ui secondary segment form">
+        <div class="ui secondary segment form">
+            <input type="hidden" name="page">
             <div class="inline fields">
                 <div class="field">
                     <label>
@@ -58,12 +58,14 @@
                 </div>
                 <div class="field">
                     <div class="ui selection dropdown">
-                        <input type="hidden" name="type">
+                        <input type="hidden" name="typeId">
                         <i class="dropdown icon"></i>
                         <div class="default text">分類</div>
                         <div class="menu">
-                            <div class="item" data-value="1">錯誤日誌</div>
+                            <div th:each="type:${type}" class="item" data-value="1" th:data-value="${type.id}" th:text="${type.name}">錯誤日誌</div>
+                            <!--/*-->
                             <div class="item" data-value="1">開發者手冊</div>
+                            <!--*/-->
                         </div>
                     </div>
                 </div>
@@ -74,46 +76,48 @@
                     </div>
                 </div>
                 <div class="field">
-                    <button class="ui mini teal basic button"><i class="search icon"></i>搜尋</button>
+                    <button type="button" id="search-btn" class="ui mini teal basic button"><i class="search icon"></i>搜尋</button>
                 </div>
             </div>
-        </form>
-        <table class="ui compact teal table">
-            <thead>
-            <tr>
-                <th></th>
-                <th>標題</th>
-                <th>類型</th>
-                <th>推薦</th>
-                <th>更新時間</th>
-                <th>操作</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr>
-                <td>1</td>
-                <td>需要練習的清單</td>
-                <td>認知升級</td>
-                <td>是</td>
-                <td>2022-07-22 10:45</td>
-                <td>
-                    <a href="" class="ui mini teal basic button">編輯</a>
-                    <a href="" class="ui mini red basic button">刪除</a>
-                </td>
-            </tr>
-            </tbody>
-            <tfoot>
-            <tr>
-                <th colspan="6">
-                    <div class="ui mini floated pagination menu">
-                        <a class="item">上一頁</a>
-                        <a class="item">下一頁</a>
-                    </div>
-                    <a href="#" class="ui mini right floated teal basic button">新增</a>
-                </th>
-            </tr>
-            </tfoot>
-        </table>
+        </div>
+        <div id="table-container">
+            <table th:fragment="blogList" class="ui compact teal table">
+                <thead>
+                <tr>
+                    <th></th>
+                    <th>標題</th>
+                    <th>類型</th>
+                    <th>推薦</th>
+                    <th>更新時間</th>
+                    <th>操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="blog,iterStat : ${page.content}">
+                    <td th:text="${iterStat.count}">1</td>
+                    <td th:text="${blog.title}">需要練習的清單</td>
+                    <td th:text="${blog.type.name}">認知升級</td>
+                    <td th:text="${blog.recommend} ? '是':'否'">是</td>
+                    <td th:text="${blog.updateTime}">2022-07-22 10:45</td>
+                    <td>
+                        <a href="#" th:href="@{/admin/blogs/{id}/input(id=${blog.id})}" class="ui mini teal basic button">編輯</a>
+                        <a href="#" th:href="@{/admin/blogs/{id}/delete(id=${blog.id})}" class="ui mini red basic button">刪除</a>
+                    </td>
+                </tr>
+                </tbody>
+                <tfoot>
+                <tr>
+                    <th colspan="6">
+                        <div class="ui mini floated pagination menu" th:if="${page.totalPages}>1">
+                            <a onclick="page(this)" th:attr="data-page=${page.number}-1" class="item" th:unless="${page.first}">上一頁</a>
+                            <a onclick="page(this)" th:attr="data-page=${page.number}+1" class="item" th:unless="${page.last}">下一頁</a>
+                        </div>
+                        <a href="#" class="ui mini right floated teal basic button">新增</a>
+                    </th>
+                </tr>
+                </tfoot>
+            </table>
+        </div>
     </div>
 </div>
 <br>
@@ -156,7 +160,7 @@
     </div>
 </footer>
 
-<!--/*/<th:block th:replace="_fragments :: script">/*/-->
+<!--/*/<th:block th:replace="admin/_fragments :: script">/*/-->
 <script src="https://cdn.jsdelivr.net/npm/jquery@3.2/dist/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
 <!--/*/</th:block>/*/-->
@@ -170,6 +174,21 @@
         on: 'hover'
     });
 
+    function page(obj){
+        $("[name='page']").val($(obj).data("page"));
+        loaddata();
+    }
+    $('#search-btn').click(function () {
+        loaddata();
+    });
+    function loaddata(){
+        $("#table-container").load(/*[[@{/admin/blogs/search}]]*/"/admin/blogs/search",{
+            title : $("[name='title']").val(),
+            typeId : $("[name='typeId']").val(),
+            recommend : $("[name='recommend']").prop('checked'),
+            page : $("[name='page']").val()
+        });
+    }
 </script>
 
 </body>
