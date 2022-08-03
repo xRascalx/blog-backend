@@ -5,6 +5,7 @@ spring:
     username: root
     password: "0000"
   jpa:
+    database-platform: org.hibernate.dialect.MySQL5Dialect
     hibernate:
       ddl-auto: update
     show-sql: true
