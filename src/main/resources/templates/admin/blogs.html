@@ -93,6 +93,7 @@
                     <th>標題</th>
                     <th>類型</th>
                     <th>推薦</th>
+                    <th>狀態/th>
                     <th>更新時間</th>
                     <th>操作</th>
                 </tr>
@@ -105,8 +106,8 @@
                     <td th:text="${blog.recommend} ? '是':'否'">是</td>
                     <td th:text="${blog.updateTime}">2022-07-22 10:45</td>
                     <td>
-                        <a href="#" th:href="@{/admin/blogs}" class="ui mini teal basic button">編輯</a>
-                        <a href="#" th:href="@{/admin/blogs}" class="ui mini red basic button">刪除</a>
+                        <a href="#" th:href="@{/admin/blogs/{id}/input(id=${blog.id})}" class="ui mini teal basic button">編輯</a>
+                        <a href="#" th:href="@{/admin/blogs/{id}/delete(id=${blog.id})}" class="ui mini red basic button">刪除</a>
                     </td>
                 </tr>
                 </tbody>
