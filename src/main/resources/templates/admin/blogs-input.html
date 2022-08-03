@@ -41,8 +41,8 @@
     <div class="ui attached pointing menu">
         <div class="ui container">
             <div class="right menu">
-                <a href="#" class="teal active item">發布</a>
-                <a href="#" class="item">列表</a>
+                <a href="#" th:href="@{/admin/blogs/input}" class="teal active item">發布</a>
+                <a href="#" th:href="@{/admin/blogs}" class="item">列表</a>
             </div>
         </div>
     </div>
@@ -50,7 +50,7 @@
     <!--中間內容-->
     <div class="m-container-small m-padded-tb-big">
         <div class="ui container">
-            <form id="blog-form" action="#" th:action="@{/admin/blogs}" method="post" class="ui form">
+            <form id="blog-form" action="#" th:object="${blog}" th:action="@{/admin/blogs}" method="post" class="ui form">
                 <input type="hidden" name="published">
                 <div class="required field">
                     <div class="ui left labeled input">
@@ -83,8 +83,7 @@
                                 <i class="dropdown icon"></i>
                                 <div class="default text">分類</div>
                                 <div class="menu">
-                                    <div class="item" data-value="1">錯誤日誌</div>
-                                    <div class="item" data-value="2">開發者手冊</div>
+                                    <div th:each="type:${type}" class="item" data-value="1" th:data-value="${type.id}" th:text="${type.name}">錯誤日誌</div>
                                 </div>
                             </div>
                         </div>
@@ -97,8 +96,7 @@
                                 <i class="dropdown icon"></i>
                                 <div class="default text">標籤</div>
                                 <div class="menu">
-                                    <div class="item" data-value="1">java</div>
-                                    <div class="item" data-value="2">javascript</div>
+                                    <div th:each="tag: ${tags}" class="item" data-value="1" th:data-value="${tag.id}" th:text="${tag.name}">java</div>
                                 </div>
                             </div>
                         </div>
@@ -115,7 +113,7 @@
                 <div class="inline fields">
                     <div class="field">
                         <div class="ui checkbox">
-                            <input type="checkbox" id="recommend" name="recommend" class="hidden" checked>
+                            <input type="checkbox" id="recommend" name="recommend" checked th:value="*{recommend}" class="hidden">
                             <label for="recommend">推薦</label>
                         </div>
                     </div>
@@ -133,8 +131,8 @@
                     </div>
                     <div class="field">
                         <div class="ui checkbox">
-                            <input type="checkbox" id="comment" name="comment" class="hidden">
-                            <label for="comment">評論</label>
+                            <input type="checkbox" id="commentabled" name="commentabled" class="hidden">
+                            <label for="commentabled">評論</label>
                         </div>
                     </div>
                 </div>
@@ -207,7 +205,8 @@
                 width: "100%",
                 height: 640,
                 syncScrolling: "single",
-                path: "../../static/lib/editormd/lib/"
+                // path: "../../static/lib/editormd/lib/"
+                path: "/lib/editormd/lib/"
             });
 
         });

@@ -64,10 +64,8 @@ public class TagServiceImpl implements TagService {
 
     @Override
     public List<Tag> listTag(String ids) { //1,2,3
-//        return tagRepository.findAll(convertToList(ids));
-        return tagRepository.findAll();
+        return tagRepository.findAllById(convertToList(ids));
     }
-
     private List<Long> convertToList(String ids) {
         List<Long> list = new ArrayList<>();
         if (!"".equals(ids) && ids != null) {
@@ -85,7 +83,7 @@ public class TagServiceImpl implements TagService {
     public Tag updateTag(Long id, Tag tag) {
         Tag t = tagRepository.findById(id).get();
         if (t == null) {
-            throw new NotFoundException("不存在该标签");
+            throw new NotFoundException("不存在該標籤");
         }
         BeanUtils.copyProperties(tag,t);
         return tagRepository.save(t);

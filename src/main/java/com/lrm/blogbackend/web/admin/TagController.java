@@ -25,8 +25,11 @@ import javax.validation.Valid;
 @RequestMapping("/admin")
 public class TagController {
 
-    @Autowired
-    private TagService tagService;
+    private final TagService tagService;
+
+    public TagController(TagService tagService) {
+        this.tagService = tagService;
+    }
 
     @GetMapping("/tags")
     public String tags(@PageableDefault(size = 10,sort = {"id"},direction = Sort.Direction.DESC)
@@ -52,14 +55,14 @@ public class TagController {
     public String post(@Valid Tag tag,BindingResult result, RedirectAttributes attributes) {
         Tag tag1 = tagService.getTagByName(tag.getName());
         if (tag1 != null) {
-            result.rejectValue("name","nameError","不能添加重复的分类");
+            result.rejectValue("name","nameError","不能添加重複的分類");
         }
         if (result.hasErrors()) {
             return "admin/tags-input";
         }
         Tag t = tagService.saveTag(tag);
         if (t == null ) {
-            attributes.addFlashAttribute("message", "新增失败");
+            attributes.addFlashAttribute("message", "新增失敗");
         } else {
             attributes.addFlashAttribute("message", "新增成功");
         }
@@ -71,14 +74,14 @@ public class TagController {
     public String editPost(@Valid Tag tag, BindingResult result,@PathVariable Long id, RedirectAttributes attributes) {
         Tag tag1 = tagService.getTagByName(tag.getName());
         if (tag1 != null) {
-            result.rejectValue("name","nameError","不能添加重复的分类");
+            result.rejectValue("name","nameError","不能添加重複的分類");
         }
         if (result.hasErrors()) {
             return "admin/tags-input";
         }
         Tag t = tagService.updateTag(id,tag);
         if (t == null ) {
-            attributes.addFlashAttribute("message", "更新失败");
+            attributes.addFlashAttribute("message", "更新失敗");
         } else {
             attributes.addFlashAttribute("message", "更新成功");
         }

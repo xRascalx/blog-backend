@@ -15,6 +15,9 @@ public class Blog {
     //標題
     private String title;
     //內容
+    //下面@為一起使用，用法是該字面使用空間較大，當使用時再做加載
+    @Basic(fetch = FetchType.LAZY)
+    @Lob
     private String content;
     //首圖
     private String firstPicture;
@@ -50,6 +53,9 @@ public class Blog {
     @OneToMany(mappedBy = "blog")
     private List<Comment> comment = new ArrayList<>();
 
+    //不會進入DB，只是單純的屬性值
+    @Transient
+    private String tagIds;
 
     public Blog() {
     }
@@ -118,7 +124,7 @@ public class Blog {
         this.shareStatement = shareStatement;
     }
 
-    public boolean isCommentabled() {
+    public boolean commentabled() {
         return commentabled;
     }
 
@@ -188,6 +194,14 @@ public class Blog {
 
     public void setComment(List<Comment> comment) {
         this.comment = comment;
+    }
+
+    public String getTagIds() {
+        return tagIds;
+    }
+
+    public void setTagIds(String tagIds) {
+        this.tagIds = tagIds;
     }
 
     @Override
