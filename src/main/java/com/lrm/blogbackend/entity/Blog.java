@@ -57,6 +57,8 @@ public class Blog {
     @Transient
     private String tagIds;
 
+    private String description;
+
     public Blog() {
     }
 
@@ -124,7 +126,7 @@ public class Blog {
         this.shareStatement = shareStatement;
     }
 
-    public boolean commentabled() {
+    public boolean isCommentabled() {
         return commentabled;
     }
 
@@ -204,6 +206,14 @@ public class Blog {
         this.tagIds = tagIds;
     }
 
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
     public void init() {
         this.tagIds = tagsToIds(this.getTags());
     }
@@ -243,6 +253,12 @@ public class Blog {
                 ", recommend=" + recommend +
                 ", createTime=" + createTime +
                 ", updateTime=" + updateTime +
+                ", type=" + type +
+                ", tags=" + tags +
+                ", user=" + user +
+                ", comment=" + comment +
+                ", tagIds='" + tagIds + '\'' +
+                ", description='" + description + '\'' +
                 '}';
     }
 }

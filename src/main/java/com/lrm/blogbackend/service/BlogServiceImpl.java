@@ -4,6 +4,7 @@ import com.lrm.blogbackend.NotFoundException;
 import com.lrm.blogbackend.Repository.BlogRepository;
 import com.lrm.blogbackend.entity.Blog;
 import com.lrm.blogbackend.entity.Type;
+import com.lrm.blogbackend.util.MyBeanUtils;
 import com.lrm.blogbackend.vo.BlogQuery;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.domain.Page;
@@ -78,7 +79,7 @@ public class BlogServiceImpl implements BlogService {
         if (b == null) {
             throw new NotFoundException("不存在該Blog");
         }
-        BeanUtils.copyProperties(b, blog);
+        BeanUtils.copyProperties(blog, b, MyBeanUtils.getNullPropertyNames(blog));
         return blogRepository.save(b);
     }
 
