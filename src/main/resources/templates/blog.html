@@ -43,30 +43,30 @@
             <!-- 頭部 -->
             <div class="ui horizontal link list">
                 <div class="item">
-                    <img src="https://unsplash.it/100/100?image=1005" alt="" class="ui avatar image">
-                    <div class="content"><a href="#" class="header">Henry</a></div>
+                    <img src="https://unsplash.it/100/100?image=1005" alt="" th:src="@{${blog.user.avatar}}" class="ui avatar image">
+                    <div class="content"><a href="#" class="header" th:src="@{${blog.user.nickname}}">Henry</a></div>
                 </div>
                 <div class="item">
-                    <i class="calendar icon"></i> 2022-07-20
+                    <i class="calendar icon"></i><span th:text="${#dates.format(blog.updateTime,'yyyy-mm-dd')}">2022-07-20</span>
                 </div>
                 <div class="item">
-                    <i class="eye icon"></i> 2342
+                    <i class="eye icon"></i><span th:text="${blog.views}">2342</span>
                 </div>
             </div>
         </div>
         <div class="ui attached segment">
             <!-- 圖片區域 -->
-            <img src="https://unsplash.it/800/450?image=1005" alt="" class="ui fluid rounded image">
+            <img src="https://unsplash.it/800/450?image=1005" th:src="@{${blog.firstPicture}}" alt="" class="ui fluid rounded image">
         </div>
         <div class="ui attached padded segment">
             <!-- 內容 -->
             <div class="ui right aligned basic segment">
-                <div class="ui orange basic label">原創</div>
+                <div class="ui orange basic label" th:text="${blog.flag}">原創</div>
             </div>
 
-            <h2 class="ui center aligned header">需要練習的清單</h2>
+            <h2 class="ui center aligned header" th:text="${blog.title}">需要練習的清單</h2>
             <br>
-            <div id="content" class="typo typo-selection js-toc-content m-padded-lr-responsive padded">
+            <div id="content" class="typo typo-selection js-toc-content m-padded-lr-responsive padded" th:utext="${blog.content}">
                 <h2 id="section1">一、关于 <i class="serif">Typo.css</i></h2>
 
                 <pre><code class="language-css">p { color: red }</code></pre>
@@ -449,7 +449,7 @@
             <br>
             <!-- 標籤 -->
             <div class="m-padded-lr-responsive">
-                <div class="ui basic teal left pointing label">方法論</div>
+                <div class="ui basic teal left pointing label" th:each="tag : ${blog.tags}" th:text="${tag.name}">方法論</div>
             </div>
 
             <!-- 讚賞 -->
@@ -479,8 +479,8 @@
             <div class="ui middle aligned grid">
                 <div class="eleven wide column">
                     <ui class="list">
-                        <li>作者: Henry (聯繫作者)</li>
-                        <li>發表時間: 2022-07-21</li>
+                        <li>作者:<span th:text="${blog.user.nickname}">Henry</span><a href="#" th:href="@{/about}" target="_blank">(聯繫作者)</a> </li>
+                        <li><span th:text="${#dates.format(blog.updateTime,'yyyy-mm-dd HH:mm')}">發表時間: 2022-07-21</span>></li>
                     </ui>
                 </div>
                 <div class="five wide column">
@@ -664,7 +664,7 @@
     <script src="../static/lib/waypoints/jquery.waypoints.min.js"></script>
 <!--/*/</th:block>/*/-->
 
-<script>
+<script th:inline="javascript">
         //導覽頁menu
         $('.menu.toggle').click(function () {
             $('.m-item').toggleClass('m-mobile-hide');
@@ -701,9 +701,13 @@
             position: 'left center'
         });
 
+
+        var serurl = "127.0.0.1:8080";
+        var url = /*[[@{/blog/{id}(id=${blog.id})}]]*/"";
+
         //二維碼生成
         var qrcode = new QRCode("qrcode", {
-            text: "http://jindo.dev.naver.com/collie",
+            text: serurl + url,
             width: 100,
             height: 100,
             colorDark: "#000000",

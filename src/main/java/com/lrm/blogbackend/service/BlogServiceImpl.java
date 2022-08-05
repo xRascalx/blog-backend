@@ -4,6 +4,7 @@ import com.lrm.blogbackend.NotFoundException;
 import com.lrm.blogbackend.Repository.BlogRepository;
 import com.lrm.blogbackend.entity.Blog;
 import com.lrm.blogbackend.entity.Type;
+import com.lrm.blogbackend.util.MarkDownUtils;
 import com.lrm.blogbackend.util.MyBeanUtils;
 import com.lrm.blogbackend.vo.BlogQuery;
 import org.springframework.beans.BeanUtils;
@@ -35,6 +36,19 @@ public class BlogServiceImpl implements BlogService {
     @Override
     public Blog getBlog(Long id) {
         return blogRepository.findById(id).get();
+    }
+
+    @Override
+    public Blog getAndConvert(Long id) {
+        Blog blog = blogRepository.findById(id).get();
+        if (blog == null) {
+            throw new NotFoundException("該blog不存在");
+        }
+        Blog b = new Blog();
+        BeanUtils.copyProperties(blog, b);
+        String content = blog.getContent();
+        blog.setContent(MarkDownUtils.markdownToHtmlExtensions(content));
+        return b;
     }
 
     //動態查詢
