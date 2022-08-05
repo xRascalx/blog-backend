@@ -9,6 +9,7 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 @Controller
 public class IndexController {
@@ -29,13 +30,13 @@ public class IndexController {
                         Model model) {
         model.addAttribute("page", blogService.listBlog(pageable));
         model.addAttribute("types", typeService.listTypeTop(6));
-        model.addAttribute("tage", tagService.listTagTop(10));
+        model.addAttribute("tags", tagService.listTagTop(10));
         model.addAttribute("recommendBlogs", blogService.listRecommendBlogTop(8));
         return "index";
     }
 
     @GetMapping("/blog/{id}")
-    public String blog() {
+    public String blog(@PathVariable String id) {
         return "blog";
     }
 }

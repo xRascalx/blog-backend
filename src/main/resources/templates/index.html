@@ -14,14 +14,14 @@
     <nav th:replace="_fragments :: menu(1)" class="ui inverted attached segment m-padded-tb-mini">
         <div class="ui container">
             <div class="ui inverted secondary stackable menu">
-                <h5 class="ui teal header item">Blog</h5>
-                <a href="#" class="m-item item m-mobile-hide"><i class="home icon"></i>首頁</a>
-                <a href="#" class="m-item item m-mobile-hide"><i class="idea icon"></i>分類</a>
-                <a href="#" class="m-item item m-mobile-hide"><i class="tags icon"></i>標籤</a>
-                <a href="#" class="m-item item m-mobile-hide"><i class="clone icon"></i>歸檔</a>
-                <a href="#" class="m-item item m-mobile-hide"><i class="info icon"></i>關於我</a>
+                <h2 class="ui teal header item">Blog</h2>
+                <a href="#" class="m-item item m-mobile-hide"><i class="mini home icon"></i>首頁</a>
+                <a href="#" class="m-item item m-mobile-hide"><i class="mini idea icon"></i>分類</a>
+                <a href="#" class="m-item item m-mobile-hide"><i class="mini tags icon"></i>標籤</a>
+                <a href="#" class="m-item item m-mobile-hide"><i class="mini clone icon"></i>歸檔</a>
+                <a href="#" class="m-item item m-mobile-hide"><i class="mini info icon"></i>關於我</a>
                 <div class="right m-item item m-mobile-hide">
-                    <div class="ui icon inverted transparent input">
+                    <div class="ui icon inverted transparent input m-margin-tb-tiny">
                         <input type="text" placeholder="Search...">
                         <i class="search link icon"></i>
                     </div>
@@ -33,7 +33,7 @@
         </a>
     </nav>
     <!--中間內容-->
-    <div class="m-container-small m-padded-tb-large">
+    <div  class="m-container m-padded-tb-big animated fadeIn">
         <div class="ui container">
             <div class="ui stackable grid">
                 <!--左邊列表-->
@@ -53,7 +53,7 @@
                     <div class="ui attached segment">
                         <div class="ui padded vertical m-padded-tb-large segment" th:each="blog : ${page.content}">
                             <div class="ui middle aligned mobile reversed stackable grid">
-                                <div class="ui eleven wide column">
+                                <div class="eleven wide column">
                                     <h3 class="ui header"><a href="#" th:href="@{/blog/{id}(id=${blog.id})}" class="m-black" target="_black" th:text="${blog.title}">佳文共賞</a></h3>
                                     <p class="m-text" th:text="|${blog.description}.....|">曾經在那些轉來轉去的郵件裡發現觸動你心靈深處的文章嗎？ 曾經在閱讀那些文章後，迫不及待的轉寄給你的至親好友嗎？
                                         請將您與大家分享的文章寄一份到分享信箱。</p>
@@ -73,7 +73,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="right align five wide column">
+                                        <div class="right aligned five wide column">
                                             <a href="#" target="_blank"
                                                 class="ui teal basic m-padded-tiny m-text-thin label" th:text="${blog.type.name}">認知升級</a>
                                         </div>
@@ -110,21 +110,22 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="right align five wide colunm">
+                                        <div class="right aligned five wide column">
                                             <a href="#" target="_blank"
                                                 class="ui teal basic m-padded-tiny m-text-thin label">認知升級</a>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="five wide column">
-                                    <a href="#" target="_blank"></a>
+                                    <a href="#" target="_blank">
                                     <img src="https://unsplash.it/800/450?image=1005" class="ui rounded image" alt="">
+                                    </a>
                                 </div>
                             </div>
                         </div>
                         <div class="ui padded vertical m-padded-tb-large segment">
                             <div class="ui mobile reversed stackable grid">
-                                <div class="ui eleven wide column">
+                                <div class="eleven wide column">
                                     <h3 class="ui header">佳文共賞</h3>
                                     <p class="m-text">曾經在那些轉來轉去的郵件裡發現觸動你心靈深處的文章嗎？ 曾經在閱讀那些文章後，迫不及待的轉寄給你的至親好友嗎？
                                         請將您與大家分享的文章寄一份到分享信箱。</p>
@@ -144,7 +145,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="right align five wide colunm">
+                                        <div class="right aligned five wide column">
                                             <a href="#" target="_blank"
                                                 class="ui teal basic m-padded-tiny m-text-thin label">認知升級</a>
                                         </div>
@@ -295,8 +296,8 @@
                         <!--*/-->
                     </div>
 
-                    <!--fotter-->
-                    <div class="ui botton attached segment" th:if="${page.totalPages}>1">
+                    <!--footer-->
+                    <div class="ui bottom attached segment" th:if="${page.totalPages}>1">
                         <div class="ui middle aligned two column grid">
                             <div class="column">
                                 <a href="#" th:href="@{/(page=${page.number}-1)}" th:unless="${page.first}" class="ui mini teal basic button">上一頁</a>
@@ -361,7 +362,7 @@
                     </div>
 
                     <!-- 標籤 -->
-                    <div class="segments m-margin-top-large">
+                    <div class="ui segments m-margin-top-large">
                         <div class="ui secondary segment">
                             <div class="ui two column grid">
                                 <div class="column">
@@ -374,7 +375,7 @@
                         </div>
                         <div class="ui teal segment">
                             <a href="#" class="ui teal basic left pointing label m-margin-tb-tiny" th:each="tag : ${tags}">
-                                <span th:text="${tag.name}">方法論</span><div class="detail" th:text="${#array.length(tag.blogs)}">23</div>
+                                <span th:text="${tag.name}">方法論</span><div class="detail" th:text="${#arrays.length(tag.blogs)}">23</div>
                             </a>
                             <!--/*-->
                             <a href="#" class="ui teal basic left pointing label m-margin-tb-tiny">
@@ -417,25 +418,25 @@
                         </div>
                         <!--/*-->
                         <div class="ui segment">
-                            <a href="#" tabindex="_blank" class="m-black m-text-thin">用戶故事(User Sotry)</a>
+                            <a href="#" target="_blank" class="m-black m-text-thin">用戶故事(User Sotry)</a>
                         </div>
                         <div class="ui segment">
-                            <a href="#" tabindex="_blank" class="m-black m-text-thin">用戶故事(User Sotry)</a>
+                            <a href="#" target="_blank" class="m-black m-text-thin">用戶故事(User Sotry)</a>
                         </div>
                         <div class="ui segment">
-                            <a href="#" tabindex="_blank" class="m-black m-text-thin">用戶故事(User Sotry)</a>
+                            <a href="#" target="_blank" class="m-black m-text-thin">用戶故事(User Sotry)</a>
                         </div>
                         <div class="ui segment">
-                            <a href="#" tabindex="_blank" class="m-black m-text-thin">用戶故事(User Sotry)</a>
+                            <a href="#" target="_blank" class="m-black m-text-thin">用戶故事(User Sotry)</a>
                         </div>
                         <div class="ui segment">
-                            <a href="#" tabindex="_blank" class="m-black m-text-thin">用戶故事(User Sotry)</a>
+                            <a href="#" target="_blank" class="m-black m-text-thin">用戶故事(User Sotry)</a>
                         </div>
                         <div class="ui segment">
-                            <a href="#" tabindex="_blank" class="m-black m-text-thin">用戶故事(User Sotry)</a>
+                            <a href="#" target="_blank" class="m-black m-text-thin">用戶故事(User Sotry)</a>
                         </div>
                         <div class="ui segment">
-                            <a href="#" tabindex="_blank" class="m-black m-text-thin">用戶故事(User Sotry)</a>
+                            <a href="#" target="_blank" class="m-black m-text-thin">用戶故事(User Sotry)</a>
                         </div>
                         <!--*/-->
                     </div>
@@ -465,21 +466,21 @@
                 <div class="three wide column">
                     <h4 class="ui inverted header m-text-thin m-text-spaced">最新</h4>
                     <div class="ui inverted link list">
-                        <a href="#" class="item">test</a>
-                        <a href="#" class="item">test</a>
-                        <a href="#" class="item">test</a>
+                        <a href="#" class="item m-text-thin">用户故事（User Story）</a>
+                        <a href="#" class="item m-text-thin">用户故事（User Story）</a>
+                        <a href="#" class="item m-text-thin">用户故事（User Story）</a>
                     </div>
                 </div>
                 <div class="three wide column">
                     <h4 class="ui inverted header m-text-thin m-text-spaced">聯繫我</h4>
                     <div class="ui inverted link list">
-                        <a href="#" class="item">Email: jk00242004@gmail.com</a>
-                        <a href="#" class="item">Line: waitingka</a>
+                        <a href="#" class="item m-text-thin">Email: jk00242004@gmail.com</a>
+                        <a href="#" class="item m-text-thin">Line: waitingka</a>
                     </div>
                 </div>
                 <div class="seven wide column">
                     <h4 class="ui inverted header m-text-thin m-text-spaced">Lirenmi</h4>
-                    <p class="m-opacity-mini">程式編譯、寫作</p>
+                    <p class="m-text-thin m-text-spaced m-opacity-mini">程式編譯、寫作</p>
                 </div>
 
             </div>
@@ -489,7 +490,7 @@
         </div>
     </footer>
 
-<!--    靜態頁面為註釋反之為thyelemf有效使用-->
+<!--    靜態頁面為註釋反之為thymeleaf有效使用-->
 <!--/*/<th:block th:replace="_fragments :: script">/*/-->
         <script src="https://cdn.jsdelivr.net/npm/jquery@3.2/dist/jquery.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
