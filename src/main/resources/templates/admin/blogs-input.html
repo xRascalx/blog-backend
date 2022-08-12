@@ -222,12 +222,12 @@
         $('.ui.dropdown').dropdown({
             on: 'hover'
         });
-
         $('#save-btn').click(function (){
             $('[name="published"]').val(false);
             $('#blog-form').submit();
         });
-
+        // 要hiedden的參數通常只是要從後端取道原本資料是啥
+        // 最後送出都會再改到資訊
         $('#publish-btn').click(function (){
             $('[name="published"]').val(true);
             $('#blog-form').submit();

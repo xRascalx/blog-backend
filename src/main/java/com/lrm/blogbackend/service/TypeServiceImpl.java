@@ -52,10 +52,18 @@ public class TypeServiceImpl implements TypeService {
 
     @Override
     public List<Type> listTypeTop(Integer size) {
+        // 1.宣告排序方式
+        // 2.放入實作物件pageable
+
+        // 執行時，才會去讀取物件參數pageable 中，的sort 參數
+        // .by(enum方式, 靜態參數)
         Sort sort = Sort.by(Sort.Direction.DESC,"blogs.size");
         Pageable pageable = PageRequest.of(0,size,sort);
+        // 3.執行
+        // 前面內容宣告的東西一定會在執行時用到，要找要找這裡面
+        List<Type> types = typeRepository.findTop(pageable);
+        return types;
 
-        return typeRepository.findTop(pageable);
     }
 
     @Transactional
