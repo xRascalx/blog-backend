@@ -6,6 +6,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -26,10 +27,14 @@ public class CommentServiceImpl implements CommentService{
     @Transactional
     @Override
     public Comment saveComment(Comment comment) {
+        //如果有回復的話，不等於-1的狀態去找到他的父級，否則就為空平常的保存
         Long parentCommentId = comment.getParentComment().getId();
         if(parentCommentId != -1){
-//            comment.setParentComment(commentRepository.findOne(parentCommentId).get());
+            comment.setParentComment(commentRepository.findById(parentCommentId).orElse(null));
+        } else {
+            comment.setParentComment(null);
         }
-        return null;
+        comment.setCreateTime(new Date());
+        return commentRepository.save(comment);
     }
 }

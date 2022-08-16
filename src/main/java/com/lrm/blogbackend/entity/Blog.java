@@ -51,7 +51,7 @@ public class Blog {
     @ManyToOne
     private User user;
     @OneToMany(mappedBy = "blog")
-    private List<Comment> comment = new ArrayList<>();
+    private List<Comment> comments = new ArrayList<>();
 
     //不會進入DB，只是單純的屬性值
     @Transient
@@ -191,11 +191,11 @@ public class Blog {
     }
 
     public List<Comment> getComment() {
-        return comment;
+        return comments;
     }
 
-    public void setComment(List<Comment> comment) {
-        this.comment = comment;
+    public void setComment(List<Comment> comments) {
+        this.comments = comments;
     }
 
     public String getTagIds() {
@@ -256,7 +256,7 @@ public class Blog {
                 ", type=" + type +
                 ", tags=" + tags +
                 ", user=" + user +
-                ", comment=" + comment +
+                ", comment=" + comments +
                 ", tagIds='" + tagIds + '\'' +
                 ", description='" + description + '\'' +
                 '}';

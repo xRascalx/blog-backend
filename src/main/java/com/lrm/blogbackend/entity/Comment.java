@@ -15,7 +15,7 @@ public class Comment {
     private String nickname;
     private String email;
     private String content;
-    //頭像
+    //頭像，在yml設定路徑
     private String avatar;
     //對應到資料庫裏面生成的時間，可以選擇類型
     @Temporal(TemporalType.TIMESTAMP)
