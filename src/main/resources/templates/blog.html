@@ -546,20 +546,21 @@ h5,h6{font-size:1em;}
                                 <img src="https://unsplash.it/100/100?image=1005" th:src="@{${comment.avatar}}">
                             </a>
                             <div class="content">
-                                <a class="author" a>
+                                <a class="author">
                                     <span th:text="${comment.nickname}">Matt</span>
-                                    <div class="metadata">
+                                </a>
+                                <div class="metadata">
                                         <span class="date"
                                               th:text="${#dates.format(comment.createTime,'yyyy-MM-dd HH:mm')}">Today at 5:42PM</span>
-                                    </div>
-                                    <div class="text" th:text="${comment.content}">
-                                        How artistic!
-                                    </div>
-                                    <div class="actions">
-                                        <a class="reply" data-commentid="1" data-commentnickname="Matt"
-                                           th:attr="data-commentid=${comment.id},data-commentnickname=${comment.nickname}"
-                                           onclick="reply(this)">回復</a>
-                                    </div>
+                                </div>
+                                <div class="text" th:text="${comment.content}">
+                                    How artistic!
+                                </div>
+                                <div class="actions">
+                                    <a class="reply" data-commentid="1" data-commentnickname="Matt"
+                                       th:attr="data-commentid=${comment.id},data-commentnickname=${comment.nickname}"
+                                       onclick="reply(this)">回復</a>
+                                </div>
                             </div>
                         </div>
 
