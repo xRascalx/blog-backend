@@ -31,7 +31,7 @@ public class CommentController {
     }
 
     @PostMapping("/comments111")
-    public String post(Comment comment){
+    public String post(Comment comment) {
         Long blogId = comment.getBlog().getId();
         comment.setBlog(blogService.getBlog(blogId));
         comment.setAvatar(avatar);
