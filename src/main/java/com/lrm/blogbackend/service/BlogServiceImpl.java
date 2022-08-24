@@ -102,6 +102,16 @@ public class BlogServiceImpl implements BlogService {
         return blogRepository.findTop(pageable);
     }
 
+    @Override
+    public Map<String, List<Blog>> archiveBlog() {
+        List<String> years = blogRepository.findGroupYear();
+        Map<String,List<Blog>> map = new HashMap<>();
+        for(String year: years){
+            map.put(year,blogRepository.findByYear(year));
+        }
+        return map;
+    }
+
 //    @Override
 //    public Map<String, List<Blog>> archiveBlog() {
 //        List<String> years = blogRepository.findGroupYear();
@@ -112,10 +122,10 @@ public class BlogServiceImpl implements BlogService {
 //        return map;
 //    }
 
-//    @Override
-//    public Long countBlog() {
-//        return blogRepository.count();
-//    }
+    @Override
+    public Long countBlog() {
+        return blogRepository.count();
+    }
 
 
     @Transactional
