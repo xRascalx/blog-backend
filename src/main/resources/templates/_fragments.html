@@ -20,7 +20,7 @@
     <div class="ui container">
         <div class="ui inverted secondary stackable menu">
             <h5 class="ui teal header item">Blog</h5>
-            <a href="#" th:href="@{/}" class="m-item item m-mobile-hide" th:classappend="${n==1} ? 'active'"><i class="home icon"></i>首頁</a>
+            <a href="#" th:href="@{/}" class="m-item item m-mobile-hide" th:classappend="${n==1} ? 'active'"><i class="home icon"></i><span th:text="#{nav.index}">首頁</span></a>
             <a href="#" th:href="@{/types/-1}" class="m-item item m-mobile-hide" th:classappend="${n==2} ? 'active'"><i class="idea icon"></i>分類</a>
             <a href="#" th:href="@{/tags/-1}" class="m-item item m-mobile-hide" th:classappend="${n==3} ? 'active'"><i class="tags icon"></i>標籤</a>
             <a href="#" th:href="@{/archives}" class="m-item item m-mobile-hide" th:classappend="${n==4} ? 'active'"><i class="clone icon"></i>歸檔</a>
@@ -54,16 +54,20 @@
             </div>
             <div class="three wide column">
                 <h4 class="ui inverted header m-text-thin m-text-spaced">最新</h4>
-                <div class="ui inverted link list">
-                    <a href="#" class="item">test</a>
-                    <a href="#" class="item">test</a>
-                    <a href="#" class="item">test</a>
+                <div id="newblog-container">
+                    <div class="ui inverted link list" th:fragment="newblogList">
+                        <a href="#" th:href="@{/blog/{id}(id=${blog.id})}" target="_blank" class="item" th:each="blog : ${newblogs}"  th:text="${blog.title}">test</a>
+                        <!--/*-->
+                        <a href="#" class="item">test</a>
+                        <a href="#" class="item">test</a>
+                        <!--*/-->
+                    </div>
                 </div>
             </div>
             <div class="three wide column">
                 <h4 class="ui inverted header m-text-thin m-text-spaced">聯繫我</h4>
                 <div class="ui inverted link list">
-                    <a href="#" class="item">Email: jk00242004@gmail.com</a>
+                    <a href="#" class="item" th:text="#{index.email}">Email: jk00242004@gmail.com</a>
                     <a href="#" class="item">Line: waitingka</a>
                 </div>
             </div>
@@ -87,6 +91,9 @@
     <script src="../static/lib/tocbot/tocbot.min.js" th:src="@{/lib/tocbot/tocbot.min.js}"></script>
     <script src="../static/lib/qrcode/qrcode.min.js" th:src="@{/lib/qrcode/qrcode.min.js}"></script>
     <script src="../static/lib/waypoints/jquery.waypoints.min.js" th:src="@{/lib/waypoints/jquery.waypoints.min.js}"></script>
+    <script>
+        $('#newblog-container').load(/*[[@{/footer/newblog}]]*/"/footer/newblog");
+    </script>
 </th:block>
 
 </body>
