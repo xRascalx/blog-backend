@@ -4,6 +4,7 @@ import com.lrm.blogbackend.domain.Book;
 import com.lrm.blogbackend.domain.BookRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -96,6 +97,7 @@ public class BookService {
 
     /**
      * 自定義更新
+     *
      * @param status
      * @param id
      * @return
@@ -108,4 +110,31 @@ public class BookService {
     public void deleteByJPQL(long id) {
         bookRepository.deleteByJPQL(id);
     }
+
+
+    /**
+     * 測試事務操作方法
+     *
+     * @param id
+     * @param status
+     * @param uid
+     * @return
+     */
+
+    /**
+     * 同時刪除又update
+     * @param id
+     * @param status
+     * @param uid
+     * @return
+     */
+    @Transactional
+    public int deleteAndUpdate(long id, int status, long uid) {
+        int dcount = bookRepository.deleteByJPQL(id);
+
+        int ucount = bookRepository.updateByJPQL(status, uid);
+
+        return dcount + ucount;
+    }
+
 }

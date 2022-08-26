@@ -135,8 +135,13 @@ public class BookAppController {
     }
 
     @GetMapping("/books/byDeleteJpql")
-    public void deleteJPQL(@RequestParam long id){
+    public void deleteJPQL(@RequestParam long id) {
         bookService.deleteByJPQL(id);
+    }
+
+    @GetMapping("/books/byTwoJpql")
+    public int findByTwoJPQL(@RequestParam int status, @RequestParam long id, @RequestParam long uid) {
+        return bookService.deleteAndUpdate(id, status, uid);
     }
 
 
