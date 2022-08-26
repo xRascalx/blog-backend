@@ -47,6 +47,7 @@ public class BookService {
 
     /**
      * 刪除一筆書單
+     *
      * @param id
      * @return
      */
@@ -54,4 +55,32 @@ public class BookService {
         bookRepository.deleteById(id);
     }
 
+    /**
+     * 根據author查詢一個書單列表
+     *
+     * @param author
+     * @return
+     */
+    public List<Book> findByAuthor(String author) {
+        return bookRepository.findByAuthor(author);
+    }
+
+    /**
+     * 根據author and status 查詢一個書單列表
+     * @param author
+     * @param status
+     * @return
+     */
+    public List<Book> findByAuthorAndStatus(String author, int status) {
+        return bookRepository.findByAuthorAndStatus(author, status);
+    }
+
+    /**
+     *
+     * @param des
+     * @return
+     */
+    public List<Book> findByDescriptionEndsWith(String des){
+        return bookRepository.findByDescriptionEndsWith(des);
+    }
 }

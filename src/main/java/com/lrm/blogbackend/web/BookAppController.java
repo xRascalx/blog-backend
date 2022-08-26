@@ -19,19 +19,21 @@ public class BookAppController {
 
     /**
      * 讀書清單列表
+     *
      * @return
      */
     @GetMapping("/books")
-    public List<Book> getAll(){
+    public List<Book> getAll() {
         return bookService.findAll();
     }
 
     /**
      * 新增一筆書單
-//     * @param name
-//     * @param author
-//     * @param description
-//     * @param status
+     * //     * @param name
+     * //     * @param author
+     * //     * @param description
+     * //     * @param status
+     *
      * @return
      */
     @PostMapping("/books")
@@ -41,7 +43,7 @@ public class BookAppController {
 //                     @RequestParam String description,
 //                     @RequestParam int status
             Book book
-    ){
+    ) {
 //        Book book = new Book();
 //        book.setAuthor(author);
 //        book.setName(name);
@@ -52,16 +54,18 @@ public class BookAppController {
 
     /**
      * 查詢一筆書單
+     *
      * @param id
      * @return
      */
     @GetMapping("/books/{id}")
-    public Book getOne(@PathVariable Long id){
+    public Book getOne(@PathVariable Long id) {
         return bookService.findOne(id);
     }
 
     /**
      * 更新一筆書單
+     *
      * @param id
      * @param name
      * @param author
@@ -74,7 +78,7 @@ public class BookAppController {
                        @RequestParam String name,
                        @RequestParam String author,
                        @RequestParam String description,
-                       @RequestParam int status){
+                       @RequestParam int status) {
         Book book = new Book();
         book.setId(id);
         book.setAuthor(author);
@@ -86,10 +90,38 @@ public class BookAppController {
 
     /**
      * 刪除一筆書單
+     *
      * @return
      */
     @DeleteMapping("/books/{id}")
-    public void delete(@PathVariable Long id){
+    public void delete(@PathVariable Long id) {
         bookService.delete(id);
+    }
+
+    /**
+     * 根據author查一筆書單
+     *
+     * @param author
+     * @return
+     */
+    @GetMapping("/books/by")
+    public List<Book> findBy(@RequestParam String author) {
+        return bookService.findByAuthor(author);
+    }
+
+    /**
+     * 根據author and status查一筆書單
+     *
+     * @param author
+     * @return
+     */
+    @PostMapping("/books/by")
+    public List<Book> findBy(@RequestParam String author, @RequestParam int status) {
+        return bookService.findByAuthorAndStatus(author, status);
+    }
+
+    @GetMapping("/books/byDes")
+    public List<Book> findByDesLike(@RequestParam("description") String des){
+        return bookService.findByDescriptionEndsWith(des);
     }
 }
