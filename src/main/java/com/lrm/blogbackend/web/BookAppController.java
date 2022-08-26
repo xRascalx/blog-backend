@@ -2,7 +2,6 @@ package com.lrm.blogbackend.web;
 
 import com.lrm.blogbackend.domain.Book;
 import com.lrm.blogbackend.service.BookService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -121,7 +120,24 @@ public class BookAppController {
     }
 
     @GetMapping("/books/byDes")
-    public List<Book> findByDesLike(@RequestParam("description") String des){
+    public List<Book> findByDesLike(@RequestParam("description") String des) {
         return bookService.findByDescriptionEndsWith(des);
     }
+
+    @GetMapping("/books/byJpql")
+    public List<Book> findByJPQL(@RequestParam long len) {
+        return bookService.findByJPQL(len);
+    }
+
+    @GetMapping("/books/byUpdateJpql")
+    public int findByUpdateJPQL(@RequestParam int status, @RequestParam long id) {
+        return bookService.updateByJPQL(status, id);
+    }
+
+    @GetMapping("/books/byDeleteJpql")
+    public void deleteJPQL(@RequestParam long id){
+        bookService.deleteByJPQL(id);
+    }
+
+
 }

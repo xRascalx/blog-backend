@@ -67,6 +67,7 @@ public class BookService {
 
     /**
      * 根據author and status 查詢一個書單列表
+     *
      * @param author
      * @param status
      * @return
@@ -76,11 +77,35 @@ public class BookService {
     }
 
     /**
-     *
      * @param des
      * @return
      */
-    public List<Book> findByDescriptionEndsWith(String des){
+    public List<Book> findByDescriptionEndsWith(String des) {
         return bookRepository.findByDescriptionEndsWith(des);
+    }
+
+    /**
+     * 自定義查詢
+     *
+     * @param len
+     * @return
+     */
+    public List<Book> findByJPQL(long len) {
+        return bookRepository.findByJPQl(len);
+    }
+
+    /**
+     * 自定義更新
+     * @param status
+     * @param id
+     * @return
+     */
+    public int updateByJPQL(int status, long id) {
+        return bookRepository.updateByJPQL(status, id);
+    }
+
+
+    public void deleteByJPQL(long id) {
+        bookRepository.deleteByJPQL(id);
     }
 }
