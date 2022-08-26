@@ -1,5 +1,6 @@
 package com.lrm.blogbackend.web;
 
+import com.lrm.blogbackend.domain.Book;
 import com.lrm.blogbackend.service.BlogService;
 import com.lrm.blogbackend.service.TagService;
 import com.lrm.blogbackend.service.TypeService;
@@ -8,10 +9,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 public class IndexController {
@@ -20,10 +18,13 @@ public class IndexController {
     private TypeService typeService;
     private TagService tagService;
 
-    public IndexController(BlogService blogService, TypeService typeService, TagService tagService) {
+    private Book book;
+
+    public IndexController(BlogService blogService, TypeService typeService, TagService tagService, Book book) {
         this.blogService = blogService;
         this.typeService = typeService;
         this.tagService = tagService;
+        this.book = book;
     }
 
 
@@ -55,6 +56,13 @@ public class IndexController {
     public String newblogs(Model model) {
         model.addAttribute("newblogs", blogService.listRecommendBlogTop(3));
         return "_fragments :: newblogList";
+    }
+
+    @GetMapping("/books/{id}")
+    @ResponseBody
+    public Object getOne(@PathVariable long id) {
+
+        return book;
     }
 }
 
