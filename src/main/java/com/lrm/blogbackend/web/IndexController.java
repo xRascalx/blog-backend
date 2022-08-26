@@ -1,6 +1,6 @@
 package com.lrm.blogbackend.web;
 
-import com.lrm.blogbackend.domain.Book;
+import com.lrm.blogbackend.domain.BookValueUse;
 import com.lrm.blogbackend.service.BlogService;
 import com.lrm.blogbackend.service.TagService;
 import com.lrm.blogbackend.service.TypeService;
@@ -18,13 +18,13 @@ public class IndexController {
     private TypeService typeService;
     private TagService tagService;
 
-    private Book book;
+    private BookValueUse bookValueUse;
 
-    public IndexController(BlogService blogService, TypeService typeService, TagService tagService, Book book) {
+    public IndexController(BlogService blogService, TypeService typeService, TagService tagService, BookValueUse book) {
         this.blogService = blogService;
         this.typeService = typeService;
         this.tagService = tagService;
-        this.book = book;
+        this.bookValueUse = book;
     }
 
 
@@ -62,7 +62,7 @@ public class IndexController {
     @ResponseBody
     public Object getOne(@PathVariable long id) {
 
-        return book;
+        return bookValueUse;
     }
 }
 
