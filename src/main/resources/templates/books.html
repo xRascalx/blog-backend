@@ -2,11 +2,17 @@
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="/bookStrapCss/bootstrap.min.css">
+
     <title>Title</title>
 </head>
 <body th:object="${book}">
-    <h5>Books List</h5>
-    <div>
+<div class="container">
+    <h4 class="page-header" style="margin-top: 50px">詳情</h4>
+    <div class="well">
         <p>
             <strong>書名:</strong><span th:text="*{name}"></span>
         </p>
@@ -20,5 +26,11 @@
             <strong>狀態:</strong><span th:text="*{status}"></span>
         </p>
     </div>
+</div>
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="/bookStrapJs/bootstrap.min.js"></script>
+
 </body>
 </html>
