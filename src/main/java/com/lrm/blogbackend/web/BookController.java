@@ -18,13 +18,24 @@ public class BookController {
         this.bookService = bookService;
     }
 
+    /**
+     * 獲取書單列表
+     * @param model
+     * @return
+     */
     @GetMapping("/allBook")
     public String list(Model model){
-        List<Book> book = bookService.findAll();
-        model.addAttribute("book", book);
+        List<Book> books = bookService.findAll();
+        model.addAttribute("books", books);
         return "books";
     }
 
+    /**
+     * 獲取書單詳情
+     * @param id
+     * @param model
+     * @return
+     */
     @GetMapping("/allBook/{id}")
     public String detail(@PathVariable long id, Model model){
         Book book = bookService.findOne(id);
@@ -32,6 +43,6 @@ public class BookController {
             book = new Book();
         }
         model.addAttribute("book", book);
-        return "books";
+        return "book";
     }
 }
