@@ -11,8 +11,9 @@
 </head>
 <body>
     <div class="container">
-        <h2>書單列表</h2>
-        <table class="table table-bordered">
+        <h2 class="page-header">書單列表</h2>
+        <p class="text-right"><a th:href="@{/allBook/input}" class="btn btn-primary">新增</a></p>
+        <table class="table table-bordered table-striped table-hover">
             <thead>
                 <tr>
                     <th>#</th>
@@ -33,7 +34,7 @@
                 <tr th:each="book, iterStat : ${books}" th:class="${iterStat.even} ? 'bg-success'">
                     <td th:text="${iterStat.count}">1</td>
 <!--                    <td><a href="#" th:text="${book.name}" th:href="@{/allBook/{id}(id=${book.id})}">書名</a></td>-->
-                    <td><a href="#" th:text="${book.name}" th:href="@{'/allBook/'+${book.id}">書名</a></td>
+                    <td><a href="#" th:text="${book.name}" th:href="@{'/allBook/'+${book.id}}">書名</a></td>
                     <td th:text="${book.author}">作者</td>
                     <td th:text="${book.description}">說明</td>
                     <td th:switch="${book.status}">
@@ -49,7 +50,7 @@
 
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-<script src="../static/bookStrapJs/bootstrap.min.js"></script>
+<script src="/bookStrapJs/bootstrap.min.js"></script>
 
 </body>
 </html>
