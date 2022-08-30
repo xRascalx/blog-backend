@@ -4,7 +4,9 @@ import com.lrm.blogbackend.domain.Book;
 import com.lrm.blogbackend.service.BookService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -31,12 +33,9 @@ public class BookController {
      * @return
      */
     @GetMapping("/allBook")
-    public String list(Model model,
-                       @RequestParam(defaultValue = "0") int page,
-                       @RequestParam(defaultValue = "5") int size) {
-//        List<Book> books = bookService.findAll();
-        Sort sort = Sort.by(Sort.Direction.DESC, "id");
-        Page<Book> page1 = bookService.findAllByPage(PageRequest.of(page, size, sort));
+    public String list(@PageableDefault(size = 5, sort = {"id"},direction = Sort.Direction.DESC) Pageable pageable,
+                       Model model) {
+        Page<Book> page1 = bookService.findAllByPage(pageable);
         model.addAttribute("page", page1);
         return "books";
     }

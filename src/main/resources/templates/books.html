@@ -56,9 +56,9 @@
     </table>
     <nav>
         <ul class="pager">
-            <il class="previous"><a href="#" th:href="@{'allBook?page='+${page.number-1}}">上一頁</a></il>
+            <il class="previous"><a href="#" th:href="@{'allBook?page='+${page.number-1}}" th:unless="${page.first}">上一頁</a></il>
 <!--            <il class="previous"><a href="#" th:href="@{allBook(page=${page.number}-1)}">上一頁</a></il>-->
-            <il class="next"><a href="#" th:href="@{allBook(page=${page.number}+1)}">下一頁</a></il>
+            <il class="next"><a href="#" th:href="@{allBook(page=${page.number}+1)}" th:unless="${page.last}">下一頁</a></il>
         </ul>
     </nav>
 </div>

@@ -4,7 +4,10 @@ import com.lrm.blogbackend.domain.Book;
 import com.lrm.blogbackend.service.BookService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -25,10 +28,9 @@ public class BookAppController {
      * @return
      */
     @GetMapping("/books")
-    public Page<Book> getAll(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "5") int size) {
-        Sort sort = Sort.by(Sort.Direction.DESC, "id");
+    public Page<Book> getAll(@PageableDefault(size = 5, sort = {"id"},direction = Sort.Direction.DESC) Pageable pageable) {
 //        return bookService.findAll();
-        return bookService.findAllByPage(PageRequest.of(page, size, sort));
+        return bookService.findAllByPage(pageable);
     }
 
     /**
