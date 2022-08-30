@@ -3,6 +3,8 @@ package com.lrm.blogbackend.web;
 import com.lrm.blogbackend.domain.Book;
 import com.lrm.blogbackend.service.BookService;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -23,9 +25,10 @@ public class BookAppController {
      * @return
      */
     @GetMapping("/books")
-    public Page<Book> getAll() {
+    public Page<Book> getAll(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "5") int size) {
+        Sort sort = Sort.by(Sort.Direction.DESC, "id");
 //        return bookService.findAll();
-        return bookService.findAllByPage();
+        return bookService.findAllByPage(PageRequest.of(page, size, sort));
     }
 
     /**

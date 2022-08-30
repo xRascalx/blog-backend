@@ -34,9 +34,7 @@ public class BookService {
      * 分頁查詢書單列表
      * @return
      */
-    public Page<Book> findAllByPage() {
-        Sort sort = Sort.by(Sort.Direction.DESC, "id");
-        Pageable pageable = PageRequest.of(1, 5, sort);
+    public Page<Book> findAllByPage(Pageable pageable) {
         return bookRepository.findAll(pageable);
     }
 

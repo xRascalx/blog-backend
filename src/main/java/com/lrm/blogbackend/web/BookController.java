@@ -2,11 +2,15 @@ package com.lrm.blogbackend.web;
 
 import com.lrm.blogbackend.domain.Book;
 import com.lrm.blogbackend.service.BookService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
@@ -27,9 +31,13 @@ public class BookController {
      * @return
      */
     @GetMapping("/allBook")
-    public String list(Model model) {
-        List<Book> books = bookService.findAll();
-        model.addAttribute("books", books);
+    public String list(Model model,
+                       @RequestParam(defaultValue = "0") int page,
+                       @RequestParam(defaultValue = "5") int size) {
+//        List<Book> books = bookService.findAll();
+        Sort sort = Sort.by(Sort.Direction.DESC, "id");
+        Page<Book> page1 = bookService.findAllByPage(PageRequest.of(page, size, sort));
+        model.addAttribute("page", page1);
         return "books";
     }
 
