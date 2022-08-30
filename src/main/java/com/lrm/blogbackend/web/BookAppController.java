@@ -2,6 +2,7 @@ package com.lrm.blogbackend.web;
 
 import com.lrm.blogbackend.domain.Book;
 import com.lrm.blogbackend.service.BookService;
+import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -22,8 +23,9 @@ public class BookAppController {
      * @return
      */
     @GetMapping("/books")
-    public List<Book> getAll() {
-        return bookService.findAll();
+    public Page<Book> getAll() {
+//        return bookService.findAll();
+        return bookService.findAllByPage();
     }
 
     /**
