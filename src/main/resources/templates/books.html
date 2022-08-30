@@ -12,6 +12,11 @@
 <body>
     <div class="container">
         <h2 class="page-header">書單列表</h2>
+        <div class="alert alert-success alert-dismissable" fade in th:unless="${#strings.isEmpty(message)}">
+            <a href="#" class="close" data-dismiss="alert">&times;</a>
+            <strong>恭喜，</strong>
+            <span th:text="${message}">訊息提交成功</span>
+        </div>
         <p class="text-right"><a th:href="@{/allBook/input}" class="btn btn-primary">新增</a></p>
         <table class="table table-bordered table-striped table-hover">
             <thead>

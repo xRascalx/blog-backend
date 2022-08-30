@@ -7,6 +7,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 
@@ -82,8 +83,18 @@ public class BookController {
      * @return
      */
     @PostMapping("/allBook")
-    public String post(Book book) {
-        bookService.save(book);
+    public String post(Book book, final RedirectAttributes attributes) {
+        Book book1 = bookService.save(book);
+        if (book1 != null) {
+            attributes.addFlashAttribute("message", "<" + book1.getName() + ">" + "訊息提交成功");
+        }
         return "redirect:/allBook";
     }
+    /**
+     * POST ---> redirect ---> GET
+     * 新增之後再redirect之後會變成get導致request並非同一條路線，故用model的話無法將值帶過去，
+     * 所以需要使用Flash Attribute(RedirectAttributes)的方式，讓不同的請求能夠帶值
+     *
+     */
+
 }
